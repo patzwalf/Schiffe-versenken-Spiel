@@ -3,4 +3,4 @@ Dieses Repo enthält alle Artefakte um damit eine eigene kleine Spielekonsole zu
 
 Enthälten sind ist der Bauplan für die PCB, die STL-Datein um das Gehäuse zu drucken sowie der Code für den Mirkocontroller ATMega168-PA.
 
-Multiplayer ist mit mehreren Konsolen möglich! 
+Multiplayer ist mit mehreren Konsolen möglich via UART Schnittstelle! Die Protokollspezifikation ist im Repo zu finden. 
