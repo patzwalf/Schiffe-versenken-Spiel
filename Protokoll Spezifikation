@@ -1,0 +1,49 @@
+PROTOKOLL: UART
+BAUDRATE: 9600
+MAX LÄNGE BEFEHL: 16 Zeichen
+FELDGRÖßE: 8x8, A,0 oben links
+
+**Aufbau einer Nachricht:**
+Generalisiertes Beispiel:
+
+_ _ _ _ _ _ .... _
+0 1 2 3 4 5 .... \n
+
+0-2 = Shortcut Befehl
+3 = X Koordinate
+4 = Y Koordinate
+
+5-15 = Beliebig wobei der Befehl in diesem Fenster mit einem \n beendet werden muss.
+
+**Spezielles Beispiel Schussbefehl:**
+S  H  T  A  0  \n
+
+**BEFEHLSSHORTCUTS:**
+- Schießen: SHT + X,Y
+- Treffer: HIT + X,Y
+- Versenkt: SNK + X,Y
+- Miss: MIS + X,Y
+- Ready: RDY + Zufallszahl zwischen 0-99 anstatt X,Y
+- Game Over: OVR + X,Y
+- Repeat: RPT + Errorcode in X,Y Format
+- Debug: DBG + 69
+
+**FORMAT KOORDINATEN:**
+- X = Buchstabe (A-H)
+- Y = Zahl (0-7)
+
+**Welcher Spieler fängt an?**
+Der Spieler der mit der Initialisierung durch RDY + Zufallszahl die niedriegere Zahl sendet.
+
+**Wie läuft das Spiel ab?**
+1) Die Spieler platzieren Ihre Schiffe (Siehe wieviele Schiffe gibt es). Wenn Sie fertig platziert wurde wird solange das eigene RDY+Zahl gesendet bis man eine Antwort (RDY+Gegnerzahl) erhält.
+2) Die Spieler senden beide Ihr RDY und vergleichen Ihren Zahlen. Sollten Sie gleich sein wird erneut gesendet mit neuer Zahl. 
+3) Der erste Spieler sendet ein SHT X,Y. Als Antwort bekommt er ein HIT X,Y oder MIS x,Y. Sollte es Sendeprobleme geben erhält er als Antwort ein RPT und muss seine letzte Nachricht erneut senden und wartet auf eine Antwort. 
+4) Jetzt ist der zweite Spieler dran und geht nach gleichem Verhalten vor. 
+5) Es wird solange gespielt bis alle Schiffe eines Spielers versenkt wurden. Dann sendet dieser Spieler ein OVR. 
+
+**Wieviele Schiffe gibt es?** 
+1 Schlachtschiff (4 Felder)
+2 Kreuzer (je 3 Felder)
+2 Zerstörer (je 2 Felder)
+2 U-Boote (je 1 Feld)
